@@ -1,0 +1,14 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="test:int" type="JavaScriptTestRunnerJest" factoryName="Jest">
+    <node-interpreter value="project" />
+    <node-options value="" />
+    <working-dir value="$PROJECT_DIR$" />
+    <jest-options value="jest --testMatch  **/*.test.int.ts --runInBand" />
+    <envs>
+      <env name="_JB_INTELLIJ_JASMINE_REPORTER_DISABLED" value="true" />
+      <env name="JEST_JUNIT_OUTPUT_DIR" value="./tests/reports/int" />
+    </envs>
+    <scope-kind value="ALL" />
+    <method v="2" />
+  </configuration>
+</component>

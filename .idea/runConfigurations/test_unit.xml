@@ -1,0 +1,12 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="test:unit" type="JavaScriptTestRunnerJest" factoryName="Jest">
+    <node-interpreter value="project" />
+    <node-options value="" />
+    <working-dir value="$PROJECT_DIR$" />
+    <envs>
+      <env name="_JB_INTELLIJ_JASMINE_REPORTER_DISABLED" value="true" />
+    </envs>
+    <scope-kind value="ALL" />
+    <method v="2" />
+  </configuration>
+</component>
