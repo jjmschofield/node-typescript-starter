@@ -1,5 +1,7 @@
 # node-typescript-starter
-A handy boilerplate for building NodeJs applications in Typescript. 
+A handy boilerplate for building NodeJs applications in Typescript.
+
+[![Known Vulnerabilities](https://snyk.io/test/github/jjmschofield/node-typescript-starter/badge.svg?targetFile=package.json)](https://snyk.io/test/github/jjmschofield/node-typescript-starter?targetFile=package.json) 
 
 The objective of this project is to give you a sensible starting point to start building out services from. 
 Some things (like the selection of Javascript superset, test framework and code style) are intentionally opinionated, however as far as possible flexibility has been considered
