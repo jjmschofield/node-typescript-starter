@@ -49,7 +49,7 @@ jobs:
         path: tests/reports/unit
     - run:
         name: Coveralls
-        command: export COVERALLS_GIT_COMMIT=$CIRCLE_SHA1 && coveralls < tests/reports/unit/coverage/lcov.info
+        command: export COVERALLS_GIT_COMMIT=$CIRCLE_SHA1 && npm run coveralls < tests/reports/unit/coverage/lcov.info
 
 
 workflows:
