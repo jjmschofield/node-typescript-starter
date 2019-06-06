@@ -11,9 +11,9 @@ module.exports = {
     "jest-junit"
   ],
   "coverageReporters": [
-    "text",
     "html",
-    "lcov"
+    "lcov",
+    "text-lcov"
   ],
   "coverageDirectory": "./tests/reports/unit/coverage",
   "collectCoverageFrom": [

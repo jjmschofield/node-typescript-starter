@@ -38,7 +38,7 @@ jobs:
         key: dependency-cache-{{ checksum "package.json" }}
     - run:
         name: Unit Tests
-        command: npm run test:unit:coverage
+        command: npm run test:unit:coverage | coveralls
     - store_artifacts:
         path: tests/reports/unit/junit.xml
         prefix: tests
