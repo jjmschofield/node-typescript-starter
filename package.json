@@ -9,7 +9,8 @@
     "test:unit": "jest",
     "test:unit:coverage": "npm run test:unit -- --coverage",
     "test:unit:coveralls": "npm run test:unit:coverage | coveralls",
-    "test:int": "env JEST_JUNIT_OUTPUT_DIR=./tests/reports/int jest --testMatch  **/*.test.int.ts --runInBand"
+    "test:int": "env JEST_JUNIT_OUTPUT_DIR=./tests/reports/int jest --testMatch  **/*.test.int.ts --runInBand",
+    "lint": "tslint -c tslint.json 'src/**/*.ts'"
   },
   "author": "",
   "license": "ISC",
