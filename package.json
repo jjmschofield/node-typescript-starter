@@ -1,7 +1,7 @@
 {
   "name": "node-typescript-starter",
   "version": "0.0.1",
-  "description": "",
+  "description": "A starter for node and typescript",
   "scripts": {
     "start": "npm run build && node dist/server.js",
     "start:dev": "nodemon -e ts --watch src --exec 'npm run build && node $NODE_DEBUG_OPTION ./dist/server.js'",
