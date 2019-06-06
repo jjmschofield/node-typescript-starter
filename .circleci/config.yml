@@ -4,6 +4,8 @@ jobs:
     docker:
     - image: node:10.16.0-alpine
     steps:
+    - run:
+        command: apk add git
     - checkout
     - restore_cache:
         key: dependency-cache-{{ checksum "package.json" }}
