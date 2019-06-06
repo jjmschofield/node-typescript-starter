@@ -78,7 +78,7 @@ An example Dockerfile is provided to get you started quickly if you want to run 
 To run your service as a container do:
 ```
 $ docker build -t node-ts-starter .
-$ docker run -p 3000:80 node-ts-starter
+$ docker run -p 3000:3000 node-ts-starter
 ```
 
 This will map port 3000 on your local machine to port 80 on the container.
@@ -97,6 +97,7 @@ The build will do the following:
 * Fan in
   * Build docker container
   * Publish docker container to docker hub
+  * Run integration tests against docker container
 
 If you are using a public repo, this will result in the following resources being made public:
 * [Build Result](https://circleci.com/gh/jjmschofield/node-typescript-starter/tree/master)
@@ -205,4 +206,5 @@ Alternatively, you can import and use the individual factory functions used by t
 * Koa input sanitation and validation pattern implementation
 * Multi-transport logger
 * Add PM2
+* Add SSL support
 

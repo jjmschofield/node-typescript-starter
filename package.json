@@ -3,9 +3,9 @@
   "version": "0.0.1",
   "description": "A starter for node and typescript",
   "scripts": {
-    "start": "npm run build && node dist/server.js",
-    "start:dev": "nodemon -e ts --watch src --exec 'npm run build && node $NODE_DEBUG_OPTION ./dist/server.js'",
-    "build": "tsc",
+    "start": "node dist/index.js",
+    "start:dev": "nodemon -e ts --watch src --exec 'npm run build && node $NODE_DEBUG_OPTION ./dist/index.js'",
+    "build": "rm -rf ./dist && tsc",
     "test:unit": "jest",
     "test:unit:coverage": "npm run test:unit -- --coverage",
     "test:int": "env JEST_JUNIT_OUTPUT_DIR=./tests/reports/int jest --testMatch  **/*.test.int.ts --runInBand",
@@ -16,6 +16,7 @@
   "license": "ISC",
   "dependencies": {
     "@hapi/boom": "^7.4.2",
+    "axios": "^0.19.0",
     "correlation-id": "^3.1.0",
     "dotenv-safe": "^6.1.0",
     "koa": "^2.7.0",
@@ -25,6 +26,7 @@
     "source-map-support": "^0.5.12"
   },
   "devDependencies": {
+    "@types/axios": "^0.14.0",
     "@types/correlation-id": "^2.1.0",
     "@types/dotenv-safe": "^5.0.3",
     "@types/hapi__boom": "^7.4.0",

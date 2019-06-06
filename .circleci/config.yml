@@ -2,10 +2,8 @@ version: 2
 jobs:
   dependencies:
     docker:
-    - image: node:10.16.0-alpine
+    - image: jjmschofield/alpine-docker:node-10.16.0
     steps:
-    - run:
-        command: apk add git
     - checkout
     - restore_cache:
         key: dependency-cache-{{ checksum "package.json" }}
@@ -18,21 +16,21 @@ jobs:
         - node_modules
   build:
     docker:
-    - image: node:10.16.0-alpine
+    - image: jjmschofield/alpine-docker:node-10.16.0
     steps:
-    - run:
-        command: apk add git
     - checkout
     - restore_cache:
         key: dependency-cache-{{ checksum "package.json" }}
-    - run: npm build
+    - run: npm run build
+    - save_cache:
+        key: build-cache-{{ .Environment.CIRCLE_SHA1 }}
+        paths:
+          - dist
 
-  test-unit:
+  test_unit:
     docker:
-    - image: node:10.16.0-alpine
+    - image: jjmschofield/alpine-docker:node-10.16.0
     steps:
-    - run:
-        command: apk add git
     - checkout
     - restore_cache:
         key: dependency-cache-{{ checksum "package.json" }}
@@ -51,35 +49,80 @@ jobs:
         name: Coveralls
         command: export COVERALLS_GIT_COMMIT=$CIRCLE_SHA1 && npm run coveralls < tests/reports/unit/coverage/lcov.info
 
-  build-container:
+  publish_container:
     docker:
-    - image: node:10.16.0-alpine
+    - image: jjmschofield/alpine-docker:node-10.16.0
     steps:
-    - run:
-        name: Install Git
-        command: apk add git
+    - setup_remote_docker
     - checkout
     - restore_cache:
+        key: build-cache-{{ .Environment.CIRCLE_SHA1 }}
+    - restore_cache:
         key: dependency-cache-{{ checksum "package.json" }}
+    - run:
+        name: Checks
+        command: pwd && ls -al
     - run:
         name: Build Container
         command: docker build -t jjmschofield/node-ts-starter:$CIRCLE_SHA1 .
     - run:
         name: Login
-        command: docker login -u $DOCKER_HUB_USER $DOCKER_HUB_PASSWORD
+        command: docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASSWORD
     - run:
         name: Push Container
         command: docker push jjmschofield/node-ts-starter:$CIRCLE_SHA1
 
+  machine_dependencies:
+    machine: true
+    steps:
+      - checkout
+      - restore_cache:
+          key: dependency-cache-machine{{ checksum "package.json" }}
+      - run:
+          name: NPM Install
+          command: npm install
+      - save_cache:
+          key: dependency-cache-machine{{ checksum "package.json" }}
+          paths:
+           - node_modules
+
+  test_int:
+    machine: true
+    steps:
+      - checkout
+      - run:
+          name: Start Container
+          command: export IMAGE_TAG=$CIRCLE_SHA1 && docker-compose up -d
+      - restore_cache:
+          key: dependency-cache-machine{{ checksum "package.json" }}
+          paths:
+            - node_modules
+      - run:
+          name: Docker Logs
+          command: docker-compose logs
+      - run:
+          name: Integration Tests
+          command: npm run test:int
+      - store_test_results:
+          path: tests/reports/int
 
 workflows:
   version: 2
   build_and_test:
     jobs:
-    - dependencies
-    - build:
-        requires:
-        - dependencies
-    - test-unit:
-        requires:
-        - dependencies
+      - dependencies
+      - machine_dependencies
+      - build:
+          requires:
+          - dependencies
+      - test_unit:
+          requires:
+          - dependencies
+      - publish_container:
+          requires:
+          - build
+          - test_unit
+      - test_int:
+          requires:
+            - publish_container
+            - machine_dependencies
