@@ -1,11 +1,9 @@
 # node-typescript-starter
-A handy boilerplate for building NodeJs applications in Typescript.
-
-[![CircleCI](https://circleci.com/gh/jjmschofield/node-typescript-starter/tree/master.svg?style=svg)](https://circleci.com/gh/jjmschofield/node-typescript-starter/tree/master)
+[![CircleCI](https://circleci.com/gh/jjmschofield/node-typescript-starter/tree/master.svg?style=shield)](https://circleci.com/gh/jjmschofield/node-typescript-starter/tree/master)
 [![Coverage Status](https://coveralls.io/repos/github/jjmschofield/node-typescript-starter/badge.svg?branch=master)](https://coveralls.io/github/jjmschofield/node-typescript-starter?branch=master)
-[![Known Vulnerabilities](https://snyk.io/test/github/jjmschofield/node-typescript-starter/badge.svg?targetFile=package.json)](https://snyk.io/test/github/jjmschofield/node-typescript-starter?targetFile=package.json) 
+[![Known Vulnerabilities](https://snyk.io/test/github/jjmschofield/node-typescript-starter/badge.svg?targetFile=package.json)](https://snyk.io/test/github/jjmschofield/node-typescript-starter?targetFile=package.json)
 
-
+A handy boilerplate for building NodeJs applications in Typescript.
 
 The objective of this project is to give you a sensible starting point to start building out services from. 
 Some things (like the selection of Javascript superset, test framework and code style) are intentionally opinionated, however as far as possible flexibility has been considered
@@ -16,6 +14,7 @@ In terms of the development stack, here are some buzz words for you:
 * Jest (unit and integration test support)
 * Docker
 * .editorconfig and IntelliJ config
+* CircleCI
 
 This starter also drops in a few libraries to help you get moving more quickly:
 * Koa middleware and factory 
@@ -84,7 +83,39 @@ $ docker run -p 3000:80 node-ts-starter
 
 This will map port 3000 on your local machine to port 80 on the container.
 
-Go ahead and player with the [Dockerfile]() to your hearts content and modify [.dockerignore]() as you need.
+Go ahead and play with the [Dockerfile]() to your hearts content and modify [.dockerignore]() as you need.
+
+## CircleCI
+The boilerplate includes a CircleCI configuration configurable in `.circleci/config.yml`. CircleCI is a fantastic solution for open source projects (it's free) and has a powerful pipeline built around docker images.
+
+The build will do the following:
+
+* Get and cache dependencies (if your `package.json` doesn't change, your dependencies be re-used between builds)
+* Fan out
+  * Build the project
+  * Run unit tests (and upload coverage to coveralls) 
+* Fan in
+  * Build docker container
+  * Publish docker container to docker hub
+
+If you are using a public repo, this will result in the following resources being made public:
+* [Build Result](https://circleci.com/gh/jjmschofield/node-typescript-starter/tree/master)
+* [Coverage Report](https://coveralls.io/github/jjmschofield/node-typescript-starter?branch=master)
+
+## How to Setup Circle CI
+
+In order to get the CI solution working for your project you will need to go through the following steps:
+
+1. Create a CircleCI Account and connect it to your VCS
+1. Create a Coveralls Account and connect it to your VCS
+1. Create a Docker Hub Account
+1. Add your repository to Coveralls and record the repository token
+1. Add your repository to CircleCI (your build will fail)
+1. Add the following environment variables in CircleCI
+  * `COVERALLS_REPO_TOKEN` = The coveralls repository token from earlier
+  * `DOCKER_HUB_USER` = Your Docker Hub username
+  * `DOCKER_HUB_PASSWORD` = Your Docker Hub password
+1. Update the badges at the top of this `README.md`
 
 ## Tslint 
 Tslint is in place to keep your code style standardised and to help protect against common bad practices.

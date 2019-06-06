@@ -51,6 +51,26 @@ jobs:
         name: Coveralls
         command: export COVERALLS_GIT_COMMIT=$CIRCLE_SHA1 && npm run coveralls < tests/reports/unit/coverage/lcov.info
 
+  build-container:
+    docker:
+    - image: node:10.16.0-alpine
+    steps:
+    - run:
+        name: Install Git
+        command: apk add git
+    - checkout
+    - restore_cache:
+        key: dependency-cache-{{ checksum "package.json" }}
+    - run:
+        name: Build Container
+        command: docker build -t jjmschofield/node-ts-starter:$CIRCLE_SHA1 .
+    - run:
+        name: Login
+        command: docker login -u $DOCKER_HUB_USER $DOCKER_HUB_PASSWORD
+    - run:
+        name: Push Container
+        command: docker push jjmschofield/node-ts-starter:$CIRCLE_SHA1
+
 
 workflows:
   version: 2
