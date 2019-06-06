@@ -12,7 +12,8 @@ module.exports = {
   ],
   "coverageReporters": [
     "text",
-    "html"
+    "html",
+    "lcov"
   ],
   "coverageDirectory": "./tests/reports/unit/coverage",
   "collectCoverageFrom": [

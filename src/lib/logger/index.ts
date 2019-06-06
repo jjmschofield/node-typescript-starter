@@ -11,27 +11,27 @@ interface ILogger {
 
 class Index implements ILogger {
   error(id: string, message: string, payload: object = {}) {
-    console.error(`[ERROR][${id}] ${message}`, JSON.stringify(assignDefaultProperties(payload)));
+    console.error(`[ERROR][${id}] ${message}`, assignDefaultProperties(payload));
   }
 
   warn(id: string, message: string, payload: object = {}) {
-    console.warn(`[WARN][${id}] ${message}`, JSON.stringify(assignDefaultProperties(payload)));
+    console.warn(`[WARN][${id}] ${message}`, assignDefaultProperties(payload));
   }
 
   info(id: string, message: string, payload: object = {}) {
-    console.log(`[INFO][${id}] ${message}`, JSON.stringify(assignDefaultProperties(payload)));
+    console.log(`[INFO][${id}] ${message}`, assignDefaultProperties(payload));
   }
 
   verbose(id: string, message: string, payload: object = {}) {
-    console.log(`[VERBOSE][${id}] ${message}`, JSON.stringify(assignDefaultProperties(payload)));
+    console.log(`[VERBOSE][${id}] ${message}`, assignDefaultProperties(payload));
   }
 
   debug(id: string, message: string, payload: object = {}) {
-    console.debug(`[DEBUG][${id}] ${message}`, JSON.stringify(assignDefaultProperties(payload)));
+    console.debug(`[DEBUG][${id}] ${message}`, assignDefaultProperties(payload));
   }
 
   silly(id: string, message: string, payload: object = {}) {
-    console.debug(`[SILLY][${id}] ${message}`, JSON.stringify(assignDefaultProperties(payload)));
+    console.debug(`[SILLY][${id}] ${message}`, assignDefaultProperties(payload));
   }
 }
 
