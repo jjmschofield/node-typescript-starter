@@ -39,8 +39,7 @@ jobs:
     - run:
         name: Unit Tests
         command:
-          - export COVERALLS_GIT_COMMIT=$CIRCLE_SHA1
-          - npm run test:unit:coveralls
+          - export COVERALLS_GIT_COMMIT=$CIRCLE_SHA1 && npm run test:unit:coveralls
     - store_artifacts:
         path: tests/reports/unit/junit.xml
         prefix: tests
