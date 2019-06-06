@@ -51,9 +51,9 @@ workflows:
   build_and_test:
     jobs:
     - dependencies
-    - build
-      requires:
-      - dependencies
-    - test-unit
+    - build:
+        requires:
+        - dependencies
+    - test-unit:
         requires:
         - dependencies
