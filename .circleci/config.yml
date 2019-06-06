@@ -45,6 +45,9 @@ jobs:
     - store_artifacts:
         path: tests/reports/unit/coverage
         prefix: coverage
+    - store_test_results:
+        path: tests/reports/unit/junit.xml
+
 
 workflows:
   version: 2
