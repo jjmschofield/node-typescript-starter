@@ -1,6 +1,6 @@
 version: 2
 jobs:
-  build:
+  dependencies:
     docker:
     - image: node:10.16.0-alpine
     steps:
@@ -16,6 +16,17 @@ jobs:
         key: dependency-cache-{{ checksum "package.json" }}
         paths:
         - node_modules
+  build:
+    docker:
+    - image: node:10.16.0-alpine
+    steps:
+    - run:
+        command: apk add git
+    - checkout
+    - restore_cache:
+        key: dependency-cache-{{ checksum "package.json" }}
+    - run: npm build
+
   test-unit:
     docker:
     - image: node:10.16.0-alpine
@@ -23,6 +34,8 @@ jobs:
     - run:
         command: apk add git
     - checkout
+    - restore_cache:
+        key: dependency-cache-{{ checksum "package.json" }}
     - run:
         name: Unit Tests
         command: npm run test:unit:coverage
@@ -37,5 +50,10 @@ workflows:
   version: 2
   build_and_test:
     jobs:
+    - dependencies
     - build
+      requires:
+      - dependencies
     - test-unit
+        requires:
+        - dependencies
