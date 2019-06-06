@@ -46,7 +46,7 @@ jobs:
         path: tests/reports/unit/coverage
         prefix: coverage
     - store_test_results:
-        path: tests/reports/unit/junit.xml
+        path: tests/reports/unit
 
 
 workflows:
