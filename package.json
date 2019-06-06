@@ -7,7 +7,8 @@
     "start:dev": "nodemon -e ts --watch src --exec 'npm run build && node $NODE_DEBUG_OPTION ./dist/server.js'",
     "build": "tsc",
     "test:unit": "jest",
-    "test:unit:coverage": "npm run test:unit -- --coverage | coveralls",
+    "test:unit:coverage": "npm run test:unit -- --coverage",
+    "test:unit:coveralls": "npm run test:unit:coverage | coveralls",
     "test:int": "env JEST_JUNIT_OUTPUT_DIR=./tests/reports/int jest --testMatch  **/*.test.int.ts --runInBand"
   },
   "author": "",
