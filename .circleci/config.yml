@@ -38,7 +38,7 @@ jobs:
         key: dependency-cache-{{ checksum "package.json" }}
     - run:
         name: Unit Tests
-        command: export COVERALLS_GIT_COMMIT=$CIRCLE_SHA1 && npm run test:unit:coveralls
+        command: npm run test:unit:coverage
     - store_artifacts:
         path: tests/reports/unit/junit.xml
         prefix: tests
@@ -47,6 +47,9 @@ jobs:
         prefix: coverage
     - store_test_results:
         path: tests/reports/unit
+    - run:
+        name: Coveralls
+        command: export COVERALLS_GIT_COMMIT=$CIRCLE_SHA1 && coveralls < tests/reports/unit/coverage/lcov.info
 
 
 workflows:
