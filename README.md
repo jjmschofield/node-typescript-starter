@@ -121,7 +121,7 @@ If you are using a public repo, this will result in the following resources bein
 * [Build Result](https://circleci.com/gh/jjmschofield/node-typescript-starter/tree/master)
 * [Coverage Report](https://coveralls.io/github/jjmschofield/node-typescript-starter?branch=master)
 
-## How to Setup Circle CI
+### How to Setup Circle CI
 
 In order to get the CI solution working for your project you will need to go through the following steps:
 
