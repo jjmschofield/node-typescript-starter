@@ -10,7 +10,8 @@
     "test:unit:coverage": "npm run test:unit -- --coverage",
     "test:int": "env JEST_JUNIT_OUTPUT_DIR=./tests/reports/int jest --testMatch  **/*.test.int.ts --runInBand",
     "lint": "tslint -c tslint.json 'src/**/*.ts'",
-    "coveralls": "coveralls"
+    "coveralls": "coveralls",
+    "docker:local": "docker-compose -f docker-compose.local.yml"
   },
   "author": "",
   "license": "ISC",

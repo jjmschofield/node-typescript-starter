@@ -78,12 +78,30 @@ An example Dockerfile is provided to get you started quickly if you want to run 
 To run your service as a container do:
 ```
 $ docker build -t node-ts-starter .
-$ docker run -p 3000:3000 node-ts-starter
+$ docker run -p 3000:54535 node-ts-starter
 ```
 
-This will map port 3000 on your local machine to port 80 on the container.
-
 Go ahead and play with the [Dockerfile]() to your hearts content and modify [.dockerignore]() as you need.
+
+`docker-compose` is also made available, with two configurations:
+ * `docker-compose.yml` default, intended to pull an image from docker hub versioned by a commit sha
+ * `docker-compose.local.yml` for local dev work, will build the image for you
+ 
+A convenience npm script is included for local builds:
+```
+$ npm run docker:local up
+``` 
+
+To use an image from docker hub do:
+```
+$ export IMAGE_TAG=<commit sha> && docker-compose up
+```
+For example:
+```
+$ export IMAGE_TAG=216d5637c48d10ee66d54cfd373b333fbf63a67e && docker-compose up
+```
+
+Docker compose will also bind to port 3000 on your local machine, so you can run integration tests against the built container.
 
 ## CircleCI
 The boilerplate includes a CircleCI configuration configurable in `.circleci/config.yml`. CircleCI is a fantastic solution for open source projects (it's free) and has a powerful pipeline built around docker images.
