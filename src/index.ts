@@ -1,7 +1,7 @@
 import 'source-map-support/register';
-import log from './server/lib/logger';
+import log from './lib/logger';
 import { server } from './server/server';
-import config from './server/lib/config';
+import config from './lib/config';
 
 (async () => {
   try {

@@ -1,7 +1,7 @@
 import Koa from 'koa';
 
-import { logRequest } from './lib/logger/middleware/koa';
-import { createDefaultApp } from './lib/koa';
+import { logRequest } from '../lib/logger/middleware/koa';
+import { createDefaultApp } from '../lib/koa';
 
 import rootRouter from './routes/root/router';
 import healthRouter from './routes/health/router';
