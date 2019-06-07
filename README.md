@@ -49,8 +49,7 @@ You can run in a suitable dev mode (file watching, debugging) with:
 $ npm run start:dev
 ```
 
-## Feature Set
-### Typescript
+## Typescript
 The project is setup already to do TypeScript transpilation. 
 
 A build will result in transpiled files being output into `dist`.
@@ -59,7 +58,7 @@ Some sensible defaults are provided, but once you have copied this starter go ah
 
 [source-map-support](https://www.npmjs.com/package/source-map-support) is included to provide accurate source information in any logged stack traces.
 
-### Jest
+## Jest
 Jest is setup and ready for you to use with any of the following commands:
 ```
 $ npm run test:unit
