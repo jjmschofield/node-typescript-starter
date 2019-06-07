@@ -1,3 +1,5 @@
+/* tslint:disable:no-console */
+
 import correlator from 'correlation-id';
 
 interface ILogger {
@@ -9,7 +11,7 @@ interface ILogger {
   silly(id: string, message: string, payload?: object): void;
 }
 
-class Index implements ILogger {
+class Logger implements ILogger {
   error(id: string, message: string, payload: object = {}) {
     console.error(`[ERROR][${id}] ${message}`, assignDefaultProperties(payload));
   }
@@ -43,5 +45,5 @@ const assignDefaultProperties = (paylod: object) : object => {
   return Object.assign({}, paylod, defaults);
 };
 
-export default new Index();
+export default new Logger();
 

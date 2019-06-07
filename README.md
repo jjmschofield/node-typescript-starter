@@ -25,7 +25,7 @@ This starter also drops in a few libraries to help you get moving more quickly:
   * Provides a Correlation ID solution to tie events across multiple microservices 
 * Basic configuration management using `.env` files  
 
-[src/app.ts] and [src/server.ts] are an example of how to compose all of this together. 
+[src/app.ts](src/server/app.ts) and [src/server/server.ts](src/server/app.ts) are an example of how to compose all of this together. 
 Everything is designed to be modular and replaceable, allowing you to rip out and replace the pieces you don't want in your stack. 
 These libraries may be extracted into separate npm packages if they become sufficiently mature in future.
 
@@ -49,6 +49,16 @@ You can run in a suitable dev mode (file watching, debugging) with:
 ```
 $ npm run start:dev
 ```
+### Git Hooks
+If you would like to use the provided git hooks to ensure the sanity of your code base at each commit do:
+```
+$ cp .hooks/pre-commit .hooks/pre-push .git/hooks
+$ chmod +x .git/hooks/pre-commit .git/hooks/pre-push
+``` 
+Pre-commit will run a lint and tests on each ts file in a commit.
+
+Pre-push will run the full suite of linting and unit tests.
+
 
 ## Typescript
 The project is setup already to do TypeScript transpilation. 
@@ -112,6 +122,7 @@ The build will do the following:
 * Fan out
   * Build the project
   * Run unit tests (and upload coverage to coveralls) 
+  * Run linter
 * Fan in
   * Build docker container
   * Publish docker container to docker hub
@@ -134,14 +145,15 @@ In order to get the CI solution working for your project you will need to go thr
   * `COVERALLS_REPO_TOKEN` = The coveralls repository token from earlier
   * `DOCKER_HUB_USER` = Your Docker Hub username
   * `DOCKER_HUB_PASSWORD` = Your Docker Hub password
-1. Update the badges at the top of this `README.md`
+
+Finally you should update the badges at the top of this `README.md`
 
 ## Tslint 
 Tslint is in place to keep your code style standardised and to help protect against common bad practices.
 
 The ruleset in use is based on the very popular [Airbnb styleguide](https://github.com/airbnb/javascript). 
 
-If you don't like these rules you can change them in [tslint.json]().
+If you don't like these rules you can change them in [tslint.json](tslint.json).
 
 ## Editorconfig and IntelliJ config
 To make adhereing to the styleguide simpler, configurations for most IDE's are provided in [.editorconfig].
@@ -216,7 +228,25 @@ Helmet and Cors are also in use, and can take configurations passed in through t
 
 Alternatively, you can import and use the individual factory functions used by the default factory as you see fit - or use the middleware directly, depending on your preference and/or use case.
 
+#### SSL
+The project is setup to serve over HTTP and HTTPS using a self signed certificate.
 
+A self signed certificate is provided in `./cert` and can be changed with:
+```
+openssl req -nodes -new -x509 -keyout server.key -out server.cert
+```
+
+For production use this certificate should be replaced a certificate issued from a root certificate authority. 
+You can get one from [Let's Encrypt](https://letsencrypt.org).
+
+It is suggesteed that you do not commit your certificate to source control but instead that you: 
+A) Inject it through your see
+B) Use a secret management service to retrieve it during process start 
+
+### Health
+A simple library and endpoint are provided to provide system info, which can be used as a heartbeat and for on demand monitoring.
+
+**NOTE:** You should protect this endpoint with authentication as it reveals important information about your server. 
 
 # Remaining Work
 * Tests
@@ -224,5 +254,5 @@ Alternatively, you can import and use the individual factory functions used by t
 * Koa input sanitation and validation pattern implementation
 * Multi-transport logger
 * Add PM2
-* Add SSL support
-
+* Handle far away file names in import
+* Protect health 
