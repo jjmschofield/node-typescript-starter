@@ -36,6 +36,7 @@ Once you have copied or cloned the contents of this repo into your project direc
 
 ```
 $ npm install
+$ cp .env.example .env
 $ npm start
 ```
 
