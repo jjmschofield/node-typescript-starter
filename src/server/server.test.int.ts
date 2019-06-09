@@ -1,25 +1,32 @@
 import axios from 'axios';
+import { createInsecureClient } from '../lib/testing/helpers/axios.helper';
+
+// @ts-ignore
+const host = global.__HOST__;
+// @ts-ignore
+const httpPort = global.__HTTP_PORT__;
+// @ts-ignore
+const httpsPort = global.__HTTPS_PORT__;
 
 describe('src/lib/index.ts', () => {
-  const expectedHttpPort = '3000';
-  const expectedHttpsPort = '3001';
-
-  beforeEach(() => {
-    process.env.HTTP_PORT = expectedHttpPort;
-    process.env.HTTP_PORTS = expectedHttpPort;
-  });
-
-  afterEach(() => {
-    delete process.env.HTTP_PORT;
-    delete process.env.HTTPS_PORT;
-  });
-
   it('should be listening on the http port', async () => {
     // Arrange
     const expectedStatusCode = 200;
 
     // Act
-    const result = await axios.get(`http://localhost:${expectedHttpPort}`);
+    const result = await axios.get(`http://${host}:${httpPort}`);
+
+    // Assert
+    expect(result.status).toEqual(expectedStatusCode);
+  });
+
+  it('should be listening on the https port', async () => {
+    // Arrange
+    const expectedStatusCode = 200;
+    const axiosInstance = createInsecureClient();
+
+    // Act
+    const result = await axiosInstance.get(`https://${host}:${httpsPort}`);
 
     // Assert
     expect(result.status).toEqual(expectedStatusCode);

@@ -3,8 +3,10 @@ services:
   node-ts-starter:
     build: .
     ports:
-      - "3000:54535"
+      - "3000:3000"
+      - "3001:3001"
     environment:
-      - HTTP_PORT=54535
-      - HTTPS_PORT=54536
+      - HTTP_PORT=3000
+      - HTTPS_PORT=3001
       - PROC_TITLE=node-ts-starter
+      - HOST=localhost

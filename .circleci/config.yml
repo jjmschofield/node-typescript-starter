@@ -14,6 +14,7 @@ jobs:
         key: dependency-cache-{{ checksum "package.json" }}
         paths:
         - node_modules
+
   build:
     docker:
     - image: jjmschofield/alpine-docker:node-10.16.0
@@ -49,6 +50,17 @@ jobs:
         name: Coveralls
         command: export COVERALLS_GIT_COMMIT=$CIRCLE_SHA1 && npm run coveralls < tests/reports/unit/coverage/lcov.info
 
+  lint:
+    docker:
+      - image: jjmschofield/alpine-docker:node-10.16.0
+    steps:
+      - checkout
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+      - run:
+          name: Lint
+          command: npm run lint
+
   publish_container:
     docker:
     - image: jjmschofield/alpine-docker:node-10.16.0
@@ -72,29 +84,17 @@ jobs:
         name: Push Container
         command: docker push jjmschofield/node-ts-starter:$CIRCLE_SHA1
 
-  machine_dependencies:
-    machine: true
-    steps:
-      - checkout
-      - restore_cache:
-          key: dependency-cache-machine{{ checksum "package.json" }}
-      - run:
-          name: NPM Install
-          command: npm install
-      - save_cache:
-          key: dependency-cache-machine{{ checksum "package.json" }}
-          paths:
-           - node_modules
-
   test_int:
-    machine: true
+    docker:
+      - image: jjmschofield/alpine-docker:node-10.16.0
     steps:
       - checkout
+      - setup_remote_docker
       - run:
           name: Start Container
           command: export IMAGE_TAG=$CIRCLE_SHA1 && docker-compose up -d
       - restore_cache:
-          key: dependency-cache-machine{{ checksum "package.json" }}
+          key: dependency-cache{{ checksum "package.json" }}
           paths:
             - node_modules
       - run:
@@ -102,27 +102,27 @@ jobs:
           command: docker-compose logs
       - run:
           name: Integration Tests
-          command: npm run test:int
-      - store_test_results:
-          path: tests/reports/int
+          command: docker-compose exec node-ts-starter sh -c "npm run test:int"
 
 workflows:
   version: 2
   build_and_test:
     jobs:
       - dependencies
-      - machine_dependencies
       - build:
           requires:
           - dependencies
       - test_unit:
           requires:
           - dependencies
+      - lint:
+          requires:
+          - dependencies
       - publish_container:
           requires:
           - build
           - test_unit
+          - lint
       - test_int:
           requires:
             - publish_container
-            - machine_dependencies

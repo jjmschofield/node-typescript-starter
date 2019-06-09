@@ -1,4 +1,4 @@
-import { createConsoleMock } from '../mocks/console.mock';
+import { createConsoleMock } from '../testing/mocks/console.mock';
 
 import underTest from './index';
 
