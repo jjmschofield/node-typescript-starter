@@ -3,8 +3,8 @@ services:
   node-ts-starter:
     image: "jjmschofield/node-ts-starter:${IMAGE_TAG}"
     ports:
-      - "3000:54535"
-      - "3001:54536"
+      - "3000:3000"
+      - "3001:3001"
     environment:
       - HTTP_PORT=3000
       - HTTPS_PORT=3001
