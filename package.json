@@ -22,7 +22,7 @@
     "dotenv-safe": "^6.1.0",
     "koa": "^2.7.0",
     "koa-cors": "0.0.16",
-    "koa-helmet": "^4.1.0",
+    "koa-helmet": "^4.2.1",
     "koa-router": "^7.4.0",
     "source-map-support": "^0.5.12"
   },
