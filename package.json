@@ -23,7 +23,7 @@
     "koa": "^2.7.0",
     "koa-cors": "0.0.16",
     "koa-helmet": "^4.1.0",
-    "koa-router": "^7.4.0",
+    "koa-router": "^11.0.2",
     "source-map-support": "^0.5.12"
   },
   "devDependencies": {
